@@ -1,6 +1,7 @@
 import React from "react";
 import { AssetManifestInjector, AssetManifest } from "./AssetManifest";
 import { Router } from "./Router";
+import "../stylesheet/index.css";
 
 declare global {
     interface Window {

@@ -25,7 +25,6 @@ const server = fastify();
         ));
 
         let context: StaticRouterContext = {};
-
         const reactAppStream = renderToString(
             <StaticRouter location={request.url} context={context}>
                 <Document assetManifest={assetManifest} />

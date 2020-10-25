@@ -1,3 +1,3 @@
 export function Home() {
-    return <h1>home!</h1>
+    return <div className="container mx-auto">ererg</div>;
 }

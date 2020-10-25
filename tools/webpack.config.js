@@ -16,7 +16,7 @@ module.exports = {
     },
     devtool: isEnvDevelopment ? "cheap-module-source-map" : "source-map",
     resolve: {
-        extensions: [".tsx", ".ts", ".js"],
+        extensions: [".tsx", ".ts", ".js", ".css"],
     },
     output: {
         path: BUILD_DIR,
@@ -38,11 +38,39 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|tsx)$/,
+                test: /\.(js|tsx|ts)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
                 },
+            },
+
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: "style-loader",
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 1,
+                        },
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                ident: "postcss",
+                                plugins: [
+                                    require("tailwindcss"),
+                                    require("autoprefixer"),
+                                ],
+                            },
+                        },
+                    },
+                ],
             },
         ],
     },

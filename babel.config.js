@@ -13,7 +13,13 @@ module.exports = (api) => {
         "@babel/preset-typescript",
     ];
 
+    let plugins = [
+        // deal with css import on the server
+        ...(isServer ? ["css-modules-transform"] : []),
+    ];
+
     return {
         presets,
+        plugins,
     };
 };
