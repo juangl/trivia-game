@@ -48,29 +48,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "style-loader",
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            importLoaders: 1,
-                        },
-                    },
-                    {
-                        loader: "postcss-loader",
-                        options: {
-                            postcssOptions: {
-                                ident: "postcss",
-                                plugins: [
-                                    require("tailwindcss"),
-                                    require("autoprefixer"),
-                                ],
-                            },
-                        },
-                    },
-                ],
+                use: ["style-loader", "css-loader", "postcss-loader"],
             },
         ],
     },
