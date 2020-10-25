@@ -1,4 +1,10 @@
 import reactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Document } from "./components/Document";
 
-reactDOM.hydrate(<Document />, (document as any) as Element);
+reactDOM.hydrate(
+    <BrowserRouter>
+        <Document />
+    </BrowserRouter>,
+    (document as any) as Element
+);
