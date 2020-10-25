@@ -2,7 +2,7 @@ import fastify from "fastify";
 import path from "path";
 import { StaticRouter } from "react-router-dom";
 import { StaticRouterContext } from "react-router";
-import { renderToNodeStream } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import devMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import fastifyExpress from "fastify-express";
@@ -19,8 +19,6 @@ const server = fastify();
     await (server as any).use(devMiddleware(compiler, { publicPath }));
 
     server.get("/*", async (request, reply) => {
-        reply.type("text/html");
-
         // get webpack generated asset-manifest
         let assetManifest = require(path.resolve(
             process.cwd() + "/build/asset-manifest.json"
@@ -28,20 +26,21 @@ const server = fastify();
 
         let context: StaticRouterContext = {};
 
-        const reactAppStream = renderToNodeStream(
+        const reactAppStream = renderToString(
             <StaticRouter location={request.url} context={context}>
                 <Document assetManifest={assetManifest} />
             </StaticRouter>
         );
 
-        reply.type("text/html");
-        reactAppStream.on("data", (data) => {
-            reply.raw.write(data);
-        });
-        reactAppStream.on("end", (data) => {
-            reply.code(404);
-            reply.raw.end();
-        });
+        if (context.url) {
+            // Somewhere a `<Redirect>` was rendered
+            reply.redirect(context.url);
+        } else {
+            reply
+                .code(context.statusCode || 200)
+                .header("Content-Type", "text/html; charset=utf-8")
+                .send(reactAppStream);
+        }
     });
 
     server.listen(8080, (err, address) => {

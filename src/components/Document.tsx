@@ -1,6 +1,6 @@
 import React from "react";
 import { AssetManifestInjector, AssetManifest } from "./AssetManifest";
-import { Route } from "react-router-dom";
+import { Router } from "./Router";
 
 declare global {
     interface Window {
@@ -10,29 +10,6 @@ declare global {
 
 interface DocumentProps {
     assetManifest?: AssetManifest;
-}
-
-function Status({ code, children }) {
-    return (
-        <Route
-            render={({ staticContext }) => {
-                if (staticContext) {
-                    staticContext.statusCode = code;
-                }
-                return children;
-            }}
-        />
-    );
-}
-
-function NotFound() {
-    return (
-        <Status code={404}>
-            <div>
-                <h1>Sorry, can’t find that.</h1>
-            </div>
-        </Status>
-    );
 }
 
 export function Document(props: DocumentProps) {
@@ -47,7 +24,7 @@ export function Document(props: DocumentProps) {
                 <script src={localAssetManifest["criticalMain.js"]} />
             </head>
             <body>
-                <Route component={NotFound} />
+                <Router />
                 <script src={localAssetManifest["main.js"]} />
             </body>
         </html>
