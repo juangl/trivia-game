@@ -1,22 +1,36 @@
 let path = require("path");
 let WebpackAssetsManifest = require("webpack-assets-manifest");
+let MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-let isEnvDevelopment = process.env.NODE_ENV === "development";
+/**
+ * Resolves a path relative to the project root
+ * @param  {...string} args path segments
+ */
+const resolvePath = (...args) => path.resolve(__dirname, "..", ...args);
 
-const ROOT_DIR = path.resolve(__dirname, "..");
-const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
+/**
+ * Returns an flatten array containing the value if the condition passed true
+ *
+ * @param {boolean} test
+ * @param {unknown | unknown[]} value
+ */
+let addIf = (test, value) =>
+    test ? [] : Array.isArray(value) ? value : [value];
+
 const SRC_DIR = resolvePath("src");
 const BUILD_DIR = resolvePath("build");
+let isEnvDevelopment = process.env.NODE_ENV === "development";
 
 module.exports = {
     mode: isEnvDevelopment ? "development" : "production",
     entry: {
         main: SRC_DIR + "/client.tsx",
         criticalMain: SRC_DIR + "/criticalClient.ts",
+        stylesheet: SRC_DIR + "/stylesheet/index.ts",
     },
-    devtool: isEnvDevelopment ? "cheap-module-source-map" : "source-map",
+    devtool: isEnvDevelopment ? "eval-source-map" : "source-map",
     resolve: {
-        extensions: [".tsx", ".ts", ".js", ".css"],
+        extensions: [".tsx", ".ts", ".js"],
     },
     output: {
         path: BUILD_DIR,
@@ -48,12 +62,34 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: ["style-loader", "css-loader", "postcss-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            postcssOptions: {
+                                ident: "postcss",
+                                plugins: [
+                                    require("tailwindcss"),
+
+                                    ...addIf(!isEnvDevelopment, [
+                                        require("autoprefixer"),
+                                        require("cssnano")({
+                                            preset: "default",
+                                        }),
+                                    ]),
+                                ],
+                            },
+                        },
+                    },
+                ],
             },
         ],
     },
 
     plugins: [
+        new MiniCssExtractPlugin(),
         // Emit a file with assets paths
         // https://github.com/webdeveric/webpack-assets-manifest#options
         new WebpackAssetsManifest({

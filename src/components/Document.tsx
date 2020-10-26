@@ -1,7 +1,7 @@
 import React from "react";
 import { AssetManifestInjector, AssetManifest } from "./AssetManifest";
 import { Router } from "./Router";
-import "../stylesheet/index.css";
+//import "../stylesheet/index.css";
 
 declare global {
     interface Window {
@@ -22,6 +22,7 @@ export function Document(props: DocumentProps) {
                 <meta charSet="utf-8" />
                 <title>Trivia Game!</title>
                 <AssetManifestInjector assetManifest={localAssetManifest} />
+                <link rel="stylesheet" href={localAssetManifest["stylesheet.css"]} />
                 <script src={localAssetManifest["criticalMain.js"]} />
             </head>
             <body>

@@ -7,14 +7,22 @@ import devMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import fastifyExpress from "fastify-express";
 import webpackConfig from "../../tools/webpack.config";
-import { Document } from "../components/Document";
 
-const compiler = webpack(webpackConfig as webpack.Configuration);
-const { publicPath } = webpackConfig.output;
-
+function resetModuleCache() {
+    if (process.env.NODE_ENV === "development") {
+        for (let key in require.cache) {
+            if (!key.match(/\/node_modules\//)) {
+                delete require.cache[key];
+            }
+        }
+    }
+}
 const server = fastify();
 
 (async () => {
+    // webpack dev middleware
+    let compiler = webpack(webpackConfig as webpack.Configuration);
+    let { publicPath } = webpackConfig.output;
     await server.register(fastifyExpress);
     await (server as any).use(devMiddleware(compiler, { publicPath }));
 
@@ -23,6 +31,13 @@ const server = fastify();
         let assetManifest = require(path.resolve(
             process.cwd() + "/build/asset-manifest.json"
         ));
+
+        // reset the module cache on each request so that I SSR the latest
+        // code. This way we don't need nodemon which would make webpack to
+        // compile everything on every restart
+        resetModuleCache();
+
+        let { Document } = require("../components/Document");
 
         let context: StaticRouterContext = {};
         const reactAppStream = renderToString(

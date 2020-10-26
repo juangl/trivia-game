@@ -2,6 +2,12 @@
 
 this is a challenge for G2i. In this project I decided to make some experiments inspired by other technologies such as Remex and use some technologies that I have never used such as `Fastify`.
 
+js takes time to run  SSR comes in
+
+
+faster reload. It only needs to reload the run.ts manually
+
+other software makes its trade off, other options should exists not because the can't or they shouldn't. 
 ## Instructions
 
 ### run the server
