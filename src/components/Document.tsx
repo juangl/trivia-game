@@ -1,7 +1,7 @@
 import React from "react";
 import { AssetManifestInjector, AssetManifest } from "./AssetManifest";
+import { BaseLayout } from "./BaseLayout";
 import { Router } from "./Router";
-//import "../stylesheet/index.css";
 
 declare global {
     interface Window {
@@ -22,11 +22,20 @@ export function Document(props: DocumentProps) {
                 <meta charSet="utf-8" />
                 <title>Trivia Game!</title>
                 <AssetManifestInjector assetManifest={localAssetManifest} />
-                <link rel="stylesheet" href={localAssetManifest["stylesheet.css"]} />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Bebas+Neue&display=swap"
+                    rel="stylesheet"
+                />
+                <link
+                    rel="stylesheet"
+                    href={localAssetManifest["stylesheet.css"]}
+                />
                 <script src={localAssetManifest["criticalMain.js"]} />
             </head>
             <body>
-                <Router />
+                <BaseLayout>
+                    <Router />
+                </BaseLayout>
                 <script src={localAssetManifest["main.js"]} />
             </body>
         </html>

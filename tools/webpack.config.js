@@ -84,7 +84,7 @@ module.exports = {
                         },
                     },
                 ],
-            },
+            }, // end of .css rule
         ],
     },
 

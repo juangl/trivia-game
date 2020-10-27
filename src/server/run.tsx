@@ -57,6 +57,11 @@ const server = fastify();
         }
     });
 
+    server.setErrorHandler(function (error, request, reply) {
+        console.error(error);
+        reply.code(500).send("something went wrong :(");
+      })
+
     server.listen(8080, (err, address) => {
         if (err) {
             console.error(err);
