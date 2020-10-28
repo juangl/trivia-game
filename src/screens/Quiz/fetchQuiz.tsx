@@ -25,16 +25,16 @@ function wrapPromise<T>(promise: Promise<T>) {
 }
 
 
-type Answer = 'True' | 'False';
+export type Answer = 'True' | 'False';
 
-interface Question {
+export interface QuestionData {
     correct_answer: Answer;
     question: string;
 };
 
 interface APIPayload {
     response_code: number;
-    results: Question[];
+    results: QuestionData[];
 }
 export function fetchQuiz() {
     let resolver: Promise<APIPayload> = Promise.resolve({

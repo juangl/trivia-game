@@ -1,15 +1,16 @@
-import { Suspense } from "react";
-import { QuizScreen } from "./QuizScreen";
+import { QuizSuspense } from "./QuizSuspense";
 
 /**
  * this component is just a wrapper to render the fallback. Will render only on
  * the client
  */
 export function Quiz() {
-    if (typeof window !== "object") return null;
     return (
-        <Suspense fallback={null}>
-            <QuizScreen />
-        </Suspense>
+        <div
+            className="bg-white w-full rounded-3xl px-6 pt-12 pb-12 text-white overflow-hidden break-words"
+            style={{ maxWidth: "500px", hyphens: "auto" }}
+        >
+            <QuizSuspense />
+        </div>
     );
 }

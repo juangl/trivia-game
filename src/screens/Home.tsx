@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "../components/Button";
 import { ArrowRightShort } from "../components/icons/ArrowRightShort";
 
 export function Home() {
@@ -18,14 +19,17 @@ export function Home() {
             </div>
 
             <div className="mt-16 flex items-center justify-end space-x-6">
-                <p className="font-body text-base leading-none">Can you score 100%?</p>
-                <Link
+                <p className="font-body text-base leading-none">
+                    Can you score 100%?
+                </p>
+
+                <Button
+                    as={Link}
                     to="/quiz"
-                    className="bg-black bg-opacity-25 hover:bg-opacity-50 text-white font-semibold rounded-full py-2 px-4 inline-flex items-center"
-                >
-                    <span className="font-body">Begin</span>
-                    <ArrowRightShort className="w-8 h-8" />
-                </Link>
+                    className="bg-black bg-opacity-25 hover:bg-opacity-50 text-white"
+                    text="Begin"
+                    rightElement={<ArrowRightShort className="w-8 h-8" />}
+                />
             </div>
         </div>
     );

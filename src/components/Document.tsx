@@ -1,4 +1,5 @@
 import React from "react";
+import { AppStateProvider } from "../appState/AppStateProvider";
 import { AssetManifestInjector, AssetManifest } from "./AssetManifest";
 import { BaseLayout } from "./BaseLayout";
 import { Router } from "./Router";
@@ -17,7 +18,7 @@ export function Document(props: DocumentProps) {
     let localAssetManifest =
         props.assetManifest || (window.__ASSET_MANIFEST__ as AssetManifest);
     return (
-        <html>
+        <html lang="en">
             <head>
                 <meta charSet="utf-8" />
                 <title>Trivia Game!</title>
@@ -34,7 +35,9 @@ export function Document(props: DocumentProps) {
             </head>
             <body>
                 <BaseLayout>
-                    <Router />
+                    <AppStateProvider>
+                        <Router />
+                    </AppStateProvider>
                 </BaseLayout>
                 <script src={localAssetManifest["main.js"]} />
             </body>
