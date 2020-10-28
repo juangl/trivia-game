@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development BABEL_ENV=node babel-node -x \".tsx,.ts\" src/server/run.tsx",
+    "dev": "cross-env NODE_ENV=development babel-node --config-file ./tools/server.babel.config.js -x \".tsx,.ts\" src/server/run.tsx",
     "build": ""
   },
   "devDependencies": {

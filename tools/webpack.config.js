@@ -6,7 +6,7 @@ let MiniCssExtractPlugin = require("mini-css-extract-plugin");
  * Resolves a path relative to the project root
  * @param  {...string} args path segments
  */
-const resolvePath = (...args) => path.resolve(__dirname, "..", ...args);
+let resolvePath = (...args) => path.resolve(__dirname, "..", ...args);
 
 /**
  * Returns an flatten array containing the value if the condition passed true
@@ -15,7 +15,7 @@ const resolvePath = (...args) => path.resolve(__dirname, "..", ...args);
  * @param {unknown | unknown[]} value
  */
 let addIf = (test, value) =>
-    test ? [] : Array.isArray(value) ? value : [value];
+    test ? (Array.isArray(value) ? value : [value]) : [];
 
 const SRC_DIR = resolvePath("src");
 const BUILD_DIR = resolvePath("build");
@@ -56,6 +56,9 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
+                    options: {
+                        configFile: resolvePath("tools/client.babel.config.js"),
+                    },
                 },
             },
 
