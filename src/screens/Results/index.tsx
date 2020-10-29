@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
     getAnsweredQuestions,
     resetState,
@@ -12,6 +12,10 @@ import { QuestionResult } from "./QuestionResult";
 export function Results() {
     let [state, dispatch] = useAppStateContext();
     let answeredQuestions = getAnsweredQuestions(state);
+
+    if (answeredQuestions.length === 0) {
+        return <Redirect to="/quiz" />;
+    }
 
     let correctAnswers = answeredQuestions
         .map((question) => question.answer === question.correctAnswer)

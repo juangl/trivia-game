@@ -1,6 +1,8 @@
 import React from "react";
-import { Answer } from "../screens/Quiz/fetchQuiz";
+
 import { AppStateContext } from "./AppStateContext";
+
+export type Answer = "True" | "False";
 
 export interface AnsweredQuestion {
     question: string;

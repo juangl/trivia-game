@@ -1,8 +1,9 @@
 import React from "react";
+import { Answer } from "../../appState";
 import { Button } from "../../components/Button";
 import { Check } from "../../components/icons/Check";
 import { X } from "../../components/icons/X";
-import { Answer, QuestionData } from "./fetchQuiz";
+import { QuestionData } from "./fetchQuiz";
 
 interface QuestionProps {
     questionData: QuestionData;

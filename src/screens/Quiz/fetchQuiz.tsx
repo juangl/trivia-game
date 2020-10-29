@@ -1,6 +1,5 @@
-import { initialAppState } from "../../appState";
+import { Answer } from "../../appState";
 
-export type Answer = "True" | "False";
 export interface QuestionData {
     correct_answer: Answer;
     question: string;
