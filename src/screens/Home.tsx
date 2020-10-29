@@ -5,7 +5,7 @@ import { ArrowRightShort } from "../components/icons/ArrowRightShort";
 export function Home() {
     return (
         <div
-            className="bg-gradient-to-tr from-primary to-secondary w-full rounded-3xl shadow-inner-white px-6 pt-12 pb-12 text-white"
+            className="bg-gradient-to-tr from-primary to-secondary w-full rounded-3xl shadow-inner-white px-6 pt-12 pb-12 text-white my-5"
             style={{ maxWidth: "500px" }}
         >
             <div>

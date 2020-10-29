@@ -1,6 +1,7 @@
 export {};
 declare global {
     interface Window {
-        dataResolver: ReturnType<typeof fetch>;
+        __DATA_RESOLVER__: ReturnType<typeof fetch>;
+        __FETCH_DATA__(): void;
     }
 }

@@ -1,52 +1,57 @@
-function wrapPromise<T>(promise: Promise<T>) {
-    let status = "pending";
-    let result: T;
-    let suspender = promise.then(
-        (r) => {
-            status = "success";
-            result = r;
-        },
-        (e) => {
-            status = "error";
-            result = e;
-        }
-    );
-    return {
-        read() {
-            if (status === "pending") {
-                throw suspender;
-            } else if (status === "error") {
-                throw result;
-            } else if (status === "success") {
-                return result!;
-            }
-        },
-    };
-}
+import { initialAppState } from "../../appState";
 
-
-export type Answer = 'True' | 'False';
-
+export type Answer = "True" | "False";
 export interface QuestionData {
     correct_answer: Answer;
     question: string;
-};
+}
 
 interface APIPayload {
     response_code: number;
     results: QuestionData[];
 }
 
+type SuspenseStatus = "pending" | "success" | "error";
 export let NUMBER_OF_QUESTIONS = 10;
-export function fetchQuiz() {
-    let resolver: Promise<APIPayload> = Promise.resolve({
-        response_code: 0,
-        results: []
-    });
+let status: SuspenseStatus;
+let result: APIPayload;
+let suspender: Promise<void>;
 
-    if (typeof window === "object") {
-        resolver = window.dataResolver.then((response) => response.json());
-    }
+export let quizResource = {
+    read() {
+        if (status === "pending") {
+            throw suspender;
+        } else if (status === "error") {
+            throw result;
+        } else if (status === "success") {
+            return result!;
+        }
+    },
+};
 
-    return wrapPromise(resolver);
+function initializeQuizResource() {
+    status = "pending";
+    suspender = window.__DATA_RESOLVER__
+        .then((response) => response.json())
+        .then(
+            (r) => {
+                status = "success";
+                result = r;
+            },
+            (e) => {
+                status = "error";
+                result = e;
+            }
+        );
+}
+
+// quicks-off another API call
+export function resetQuizResource() {
+    window.__FETCH_DATA__();
+    initializeQuizResource();
+}
+
+// initialize this values only on the client. On the server they aren't used
+if (typeof window === "object") {
+    initializeQuizResource();
 }

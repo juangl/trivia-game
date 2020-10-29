@@ -1,6 +1,7 @@
 let path = require("path");
 let WebpackAssetsManifest = require("webpack-assets-manifest");
 let MiniCssExtractPlugin = require("mini-css-extract-plugin");
+let ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 /**
  * Resolves a path relative to the project root
@@ -100,5 +101,6 @@ module.exports = {
             publicPath: true,
             writeToDisk: true,
         }),
+        new ForkTsCheckerWebpackPlugin(),
     ],
 };
