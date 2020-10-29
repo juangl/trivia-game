@@ -36,6 +36,8 @@ interface APIPayload {
     response_code: number;
     results: QuestionData[];
 }
+
+export let NUMBER_OF_QUESTIONS = 10;
 export function fetchQuiz() {
     let resolver: Promise<APIPayload> = Promise.resolve({
         response_code: 0,

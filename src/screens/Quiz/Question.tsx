@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../../components/Button";
 import { Check } from "../../components/icons/Check";
-import { X } from "../../components/icons/x";
+import { X } from "../../components/icons/X";
 import { Answer, QuestionData } from "./fetchQuiz";
 
 interface QuestionProps {
@@ -9,12 +9,11 @@ interface QuestionProps {
     onAnswer(answer: Answer): void;
 }
 export function Question(props: QuestionProps) {
-    const [selectedAnswer, setSelectedAnswer] = React.useState<
+    let [selectedAnswer, setSelectedAnswer] = React.useState<
         Answer | undefined
     >();
-    //cursor-not-allowed
 
-    // return a function with name
+    // return a `named function` instead of an anonymous arrow function
     let handleAnswer = (answer: Answer) =>
         function answerHandler() {
             setSelectedAnswer(answer);

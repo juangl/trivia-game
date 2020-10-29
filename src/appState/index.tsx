@@ -1,24 +1,50 @@
 import React from "react";
 import { Answer } from "../screens/Quiz/fetchQuiz";
 import { AppStateContext } from "./AppStateContext";
-import { AnsweredQuestion, AppState } from "./AppStateTypes";
+
+export interface AnsweredQuestion {
+    question: string;
+    answer: Answer;
+    correctAnswer: Answer;
+    id: number;
+}
+
+export interface AppState {
+    answeredQuestions: AnsweredQuestion[];
+}
 
 //
 // action creators
 //
 
-export let answerQuestion = (
-    question: string,
-    answer: Answer,
-    correctAnswer: Answer
-) => ({
-    type: "ANSWER_QUESTION",
+interface AnswerQuestionArgs {
+    question: string;
+    answer: Answer;
+    correctAnswer: Answer;
+    id: number;
+}
+
+export let answerQuestion = ({
     question,
     answer,
     correctAnswer,
+    id,
+}: AnswerQuestionArgs) => ({
+    type: "ANSWER_QUESTION" as const,
+    question,
+    answer,
+    correctAnswer,
+    id,
 });
 
-export type AnswerActions = ReturnType<typeof answerQuestion>;
+export let resetState = () => ({
+    type: "RESET_STATE" as const,
+});
+
+// Discriminating Union including all the possible actions
+export type AnswerActions =
+    | ReturnType<typeof answerQuestion>
+    | ReturnType<typeof resetState>;
 
 //
 // selectors
@@ -29,7 +55,11 @@ export let getAnsweredQuestions = (state: AppState) => state.answeredQuestions;
 // add new actions here
 type AppStateActions = AnswerActions;
 
-function appStateReducer(state: AppState, action: AppStateActions) {
+export let initialAppState = {
+    answeredQuestions: [] as AnsweredQuestion[],
+};
+
+function appStateReducer(state: AppState, action: AppStateActions): AppState {
     switch (action.type) {
         case "ANSWER_QUESTION":
             let answeredQuestions = state.answeredQuestions;
@@ -41,20 +71,19 @@ function appStateReducer(state: AppState, action: AppStateActions) {
                         question: action.question,
                         answer: action.answer,
                         correctAnswer: action.correctAnswer,
+                        id: action.id,
                     },
                 ],
             };
+        case "RESET_STATE":
+            return initialAppState;
         default:
             throw new Error("unexpected action type");
     }
 }
 
-export let appStateInitialValue = {
-    answeredQuestions: [] as AnsweredQuestion[],
-};
-
 export function useAppStateReducer() {
-    return React.useReducer(appStateReducer, appStateInitialValue);
+    return React.useReducer(appStateReducer, initialAppState);
 }
 
 export function useAppStateContext() {

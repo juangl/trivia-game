@@ -4,9 +4,10 @@ import {
     answerQuestion,
     getAnsweredQuestions,
     useAppStateContext,
-} from "../../appState/AppStateHooks";
-import { fetchQuiz } from "./fetchQuiz";
+} from "../../appState";
+import { fetchQuiz, NUMBER_OF_QUESTIONS } from "./fetchQuiz";
 import { Question } from "./Question";
+import { useHistory } from "react-router-dom";
 
 let QUESTION_SWITCH_DELAY = 800;
 let resource = fetchQuiz();
@@ -14,18 +15,23 @@ let resource = fetchQuiz();
 export function Questions() {
     // will suspend this component until the API loads
     let quiz = resource.read();
-    let questionsData = quiz!.results;
+
+    // get state from the store
     let [state, dispatch] = useAppStateContext();
     let answeredQuestions = getAnsweredQuestions(state);
 
     let [currentIndex, setCurrentIndex] = React.useState(0);
+    let history = useHistory();
+
+    let questionsData = quiz!.results;
 
     React.useEffect(() => {
         let timeoutId: NodeJS.Timeout;
         if (answeredQuestions.length > currentIndex) {
             timeoutId = setTimeout(() => {
-                if (currentIndex === 9) {
+                if (currentIndex === NUMBER_OF_QUESTIONS - 1) {
                     // navigate to results
+                    history.push("/results");
                 } else {
                     setCurrentIndex((index) => index + 1);
                 }
@@ -35,7 +41,7 @@ export function Questions() {
         return () => {
             clearTimeout(timeoutId);
         };
-    }, [answeredQuestions, currentIndex]);
+    }, [answeredQuestions, currentIndex, history]);
 
     return (
         <AnimatePresence exitBeforeEnter initial={false}>
@@ -50,11 +56,13 @@ export function Questions() {
                     onAnswer={(answer) => {
                         // using inline functions to get type inference
                         dispatch(
-                            answerQuestion(
-                                questionsData[currentIndex].question,
+                            answerQuestion({
+                                question: questionsData[currentIndex].question,
                                 answer,
-                                questionsData[currentIndex].correct_answer
-                            )
+                                correctAnswer:
+                                    questionsData[currentIndex].correct_answer,
+                                id: currentIndex,
+                            })
                         );
                     }}
                 />

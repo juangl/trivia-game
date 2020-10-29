@@ -1,7 +1,8 @@
 import {
     getAnsweredQuestions,
     useAppStateContext,
-} from "../../appState/AppStateHooks";
+} from "../../appState";
+import { NUMBER_OF_QUESTIONS } from "./fetchQuiz";
 
 export function ProgressBar() {
     let [state] = useAppStateContext();
@@ -21,7 +22,9 @@ export function ProgressBar() {
                   ) top left fixed`,
 
                 backgroundSize: "30px 30px",
-                width: `${answeredQuestions.length * 10}%`,
+                width: `${
+                    answeredQuestions.length * (100 / NUMBER_OF_QUESTIONS)
+                }%`,
             }}
         ></div>
     );

@@ -1,10 +1,10 @@
 import React from "react";
 import {
     AnswerActions,
-    appStateInitialValue,
+    AppState,
+    initialAppState,
     useAppStateReducer,
-} from "./AppStateHooks";
-import { AppState } from "./AppStateTypes";
+} from ".";
 
 export interface AppStateContextValue {
     state: AppState;
@@ -14,7 +14,7 @@ export interface AppStateContextValue {
 export let AppStateContext = React.createContext<
     ReturnType<typeof useAppStateReducer>
 >([
-    appStateInitialValue,
+    initialAppState,
     () => {
         throw Error("Please wrap your component with the AppStateProvider");
     },

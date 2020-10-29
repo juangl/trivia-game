@@ -1,6 +1,6 @@
 import React from "react";
 import { AppStateContext } from "./AppStateContext";
-import { useAppStateReducer } from "./AppStateHooks";
+import { useAppStateReducer } from ".";
 
 interface AppStateProviderProps {}
 export function AppStateProvider(
