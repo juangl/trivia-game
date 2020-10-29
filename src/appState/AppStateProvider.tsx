@@ -6,14 +6,9 @@ interface AppStateProviderProps {}
 export function AppStateProvider(
     props: React.PropsWithChildren<AppStateProviderProps>
 ) {
-    let [state, dispatch] = useAppStateReducer();
+    let appStateReducer = useAppStateReducer();
     return (
-        <AppStateContext.Provider
-            value={{
-                state,
-                dispatch,
-            }}
-        >
+        <AppStateContext.Provider value={appStateReducer}>
             {props.children}
         </AppStateContext.Provider>
     );

@@ -1,13 +1,49 @@
 import React from "react";
+import { Answer } from "../screens/Quiz/fetchQuiz";
 import { AppStateContext } from "./AppStateContext";
 import { AnsweredQuestion, AppState } from "./AppStateTypes";
 
-export type AppStateActions = { type: "test" };
+//
+// action creators
+//
+
+export let answerQuestion = (
+    question: string,
+    answer: Answer,
+    correctAnswer: Answer
+) => ({
+    type: "ANSWER_QUESTION",
+    question,
+    answer,
+    correctAnswer,
+});
+
+export type AnswerActions = ReturnType<typeof answerQuestion>;
+
+//
+// selectors
+//
+
+export let getAnsweredQuestions = (state: AppState) => state.answeredQuestions;
+
+// add new actions here
+type AppStateActions = AnswerActions;
 
 function appStateReducer(state: AppState, action: AppStateActions) {
     switch (action.type) {
-        case "test":
-            return state;
+        case "ANSWER_QUESTION":
+            let answeredQuestions = state.answeredQuestions;
+            return {
+                ...state,
+                answeredQuestions: [
+                    ...answeredQuestions,
+                    {
+                        question: action.question,
+                        answer: action.answer,
+                        correctAnswer: action.correctAnswer,
+                    },
+                ],
+            };
         default:
             throw new Error("unexpected action type");
     }

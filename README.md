@@ -1,24 +1,31 @@
 # Trivia Game
 
-this is a challenge for G2i. In this project I decided to make some experiments inspired by other technologies such as Remex and use some technologies that I have never used such as `Fastify`.
+## How to run it
 
-js takes time to run  SSR comes in
+first install dependencies
 
+```
+npm i
+```
 
-faster reload. It only needs to reload the run.ts manually
-
-other software makes its trade off, other options should exists not because the can't or they shouldn't. 
-## Instructions
-
-### run the server
-
-to run the server in development mode use the following command:
+latter run the server
 
 ```
 npm run dev
 ```
 
-## Technology description
+in my case I run the these tool versions:
+
+```
+npm: 7.0.3
+node: v15.0.1
+```
+
+## Technologies used
+
+### Tailwind
+
+### Framer Motion
 
 ### React 17 JSX Factories
 

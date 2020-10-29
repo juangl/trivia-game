@@ -3,7 +3,12 @@ module.exports = {
         removeDeprecatedGapUtilities: true,
         purgeLayersByDefault: true,
     },
-    purge: ["./src/**/*.tsx"],
+    purge: {
+        content: ["./src/**/*.tsx"],
+        options: {
+            whitelist: [],
+        },
+    },
     theme: {
         extend: {
             colors: {
@@ -18,8 +23,14 @@ module.exports = {
                 display: ["Bebas Neue"],
                 body: ["Roboto Slab"],
             },
+
+            transitionProperty: {
+                width: "width",
+            },
         },
     },
-    variants: {},
+    variants: {
+        pointerEvents: ["disabled"],
+    },
     plugins: [],
 };
