@@ -11,15 +11,11 @@ export interface AnsweredQuestion {
     id: number;
 }
 
-export interface AppState {
-    answeredQuestions: AnsweredQuestion[];
-}
-
 //
 // action creators
 //
 
-interface AnswerQuestionArgs {
+export interface AnswerQuestionArgs {
     question: string;
     answer: Answer;
     correctAnswer: Answer;
@@ -53,6 +49,8 @@ export let getAnsweredQuestions = (state: AppState) => state.answeredQuestions;
 export type AppStateAction =
     | ReturnType<typeof answerQuestion>
     | ReturnType<typeof resetState>;
+
+export type AppState = typeof appInitialState;
 
 export let appInitialState = {
     answeredQuestions: [] as AnsweredQuestion[],
