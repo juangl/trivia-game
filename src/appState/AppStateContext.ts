@@ -1,20 +1,20 @@
 import React from "react";
 import {
-    AnswerActions,
     AppState,
-    initialAppState,
+    appInitialState,
     useAppStateReducer,
+    AppStateAction,
 } from ".";
 
 export interface AppStateContextValue {
     state: AppState;
-    dispatch: React.Dispatch<AnswerActions>;
+    dispatch: React.Dispatch<AppStateAction>;
 }
 
 export let AppStateContext = React.createContext<
     ReturnType<typeof useAppStateReducer>
 >([
-    initialAppState,
+    appInitialState,
     () => {
         throw Error("Please wrap your component with the AppStateProvider");
     },

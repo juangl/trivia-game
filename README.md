@@ -25,7 +25,7 @@ node: v15.0.1
 
 ### Suspense
 
-This project uses the experimental React Suspense API for data fetching. We take advantage of this technology to kickoff the critical network requests before any JS loads (see `src/criticalClient.js`). The component shown in the `/quiz` route will suspend until the request completes.
+This project uses the experimental React Suspense API for data fetching. We take advantage of this technology to kickoff the critical network requests before the main bundle loads (see `src/criticalClient.js`) and load the data and the JS in parallel. The component shown in the `/quiz` route will suspend until the request completes.
 
 ## Technologies used
 

@@ -58,7 +58,31 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        configFile: resolvePath("tools/client.babel.config.js"),
+                        // https://babeljs.io/docs/usage/options/
+                        babelrc: false,
+                        configFile: false,
+                        presets: [
+                            [
+                                "@babel/preset-react",
+                                {
+                                    runtime: "automatic",
+                                },
+                            ],
+                            [
+                                "@babel/preset-env",
+                                {
+                                    targets: {
+                                        browsers: [
+                                            ">1%",
+                                            "last 4 versions",
+                                            "Firefox ESR",
+                                            "not ie < 9",
+                                        ],
+                                    },
+                                },
+                            ],
+                            "@babel/preset-typescript",
+                        ],
                     },
                 },
             },

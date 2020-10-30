@@ -43,25 +43,25 @@ export let resetState = () => ({
     type: "RESET_STATE" as const,
 });
 
-// Discriminating Union including all the possible actions
-export type AnswerActions =
-    | ReturnType<typeof answerQuestion>
-    | ReturnType<typeof resetState>;
-
 //
 // selectors
 //
 
 export let getAnsweredQuestions = (state: AppState) => state.answeredQuestions;
 
-// add new actions here
-type AppStateActions = AnswerActions;
+// Discriminating Union including all the possible actions
+export type AppStateAction =
+    | ReturnType<typeof answerQuestion>
+    | ReturnType<typeof resetState>;
 
-export let initialAppState = {
+export let appInitialState = {
     answeredQuestions: [] as AnsweredQuestion[],
 };
 
-function appStateReducer(state: AppState, action: AppStateActions): AppState {
+export function appStateReducer(
+    state: AppState,
+    action: AppStateAction
+): AppState {
     switch (action.type) {
         case "ANSWER_QUESTION":
             let answeredQuestions = state.answeredQuestions;
@@ -78,14 +78,14 @@ function appStateReducer(state: AppState, action: AppStateActions): AppState {
                 ],
             };
         case "RESET_STATE":
-            return initialAppState;
+            return appInitialState;
         default:
             throw new Error("unexpected action type");
     }
 }
 
 export function useAppStateReducer() {
-    return React.useReducer(appStateReducer, initialAppState);
+    return React.useReducer(appStateReducer, appInitialState);
 }
 
 export function useAppStateContext() {
