@@ -44,7 +44,7 @@ export function Questions() {
 
     return (
         <AnimateSharedLayout>
-            <AnimatePresence exitBeforeEnter>
+            <AnimatePresence exitBeforeEnter initial={false}>
                 <motion.div
                     layout
                     key={currentIndex}

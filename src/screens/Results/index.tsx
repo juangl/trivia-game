@@ -8,6 +8,7 @@ import { Button } from "../../components/Button";
 import { ArrowClockwise } from "../../components/icons/ArrowClockWise";
 import { NUMBER_OF_QUESTIONS, resetQuizResource } from "../Quiz/fetchQuiz";
 import { QuestionResult } from "./QuestionResult";
+import { motion } from "framer-motion";
 
 export function Results() {
     let [state, dispatch] = useAppStateContext();
@@ -22,7 +23,10 @@ export function Results() {
         .filter(Boolean).length;
 
     return (
-        <div
+        <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
             className="bg-gradient-to-tr from-secondary to-tertiary w-full rounded-3xl shadow-inner-white px-6 pt-12 pb-12 text-white my-5 overflow-hidden"
             style={{ maxWidth: "500px" }}
         >
@@ -57,6 +61,6 @@ export function Results() {
                     rightElement={<ArrowClockwise className="w-5 h-5 ml-2" />}
                 />
             </div>
-        </div>
+        </motion.div>
     );
 }

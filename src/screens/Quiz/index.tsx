@@ -1,5 +1,6 @@
 import { QuizSuspense } from "./QuizSuspense";
 import { ProgressBar } from "./ProgressBar";
+import { motion } from "framer-motion";
 
 /**
  * this component is just a wrapper to render the fallback. Will render only on
@@ -7,12 +8,15 @@ import { ProgressBar } from "./ProgressBar";
  */
 export function Quiz() {
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="bg-white w-full rounded-3xl px-6 pt-12 pb-12 text-white overflow-hidden break-words relative my-5"
             style={{ maxWidth: "500px", hyphens: "auto" }}
         >
             <ProgressBar />
             <QuizSuspense />
-        </div>
+        </motion.div>
     );
 }

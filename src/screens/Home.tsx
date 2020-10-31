@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 import { ArrowRightShort } from "../components/icons/ArrowRightShort";
+import { motion } from "framer-motion";
 
 export function Home() {
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="bg-gradient-to-tr from-primary to-secondary w-full rounded-3xl shadow-inner-white px-6 pt-12 pb-12 text-white my-5"
             style={{ maxWidth: "500px" }}
         >
@@ -31,6 +35,6 @@ export function Home() {
                     rightElement={<ArrowRightShort className="w-8 h-8" />}
                 />
             </div>
-        </div>
+        </motion.div>
     );
 }
