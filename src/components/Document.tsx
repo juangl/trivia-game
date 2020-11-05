@@ -16,7 +16,7 @@ interface DocumentProps {
 
 export function Document(props: DocumentProps) {
     let localAssetManifest =
-        props.assetManifest || (window.__ASSET_MANIFEST__ as AssetManifest);
+        props.assetManifest || (window.__ASSET_MANIFEST__);
     return (
         <html lang="en">
             <head>
