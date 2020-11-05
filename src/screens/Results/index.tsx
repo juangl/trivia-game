@@ -24,11 +24,11 @@ export function Results() {
 
     return (
         <motion.div
-        key="results"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: .8 }}
+            key="results"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
             className="bg-gradient-to-tr from-secondary to-tertiary w-full rounded-3xl shadow-inner-white px-6 pt-12 pb-12 text-white my-5 overflow-hidden"
             style={{ maxWidth: "500px" }}
         >
